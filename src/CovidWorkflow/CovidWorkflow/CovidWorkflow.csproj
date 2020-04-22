@@ -19,5 +19,9 @@
     <ProjectReference Include="..\CovidDB\CovidDB.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 
 </Project>
