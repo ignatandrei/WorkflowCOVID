@@ -32,7 +32,10 @@ namespace CovidWorkflow
             services
                 .AddDbContext<WorkflowCovidContext>(opt=> 
                 opt.UseInMemoryDatabase("Test"));
-
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "wwwroot";
+            });
             services.AddCors(options =>
             {
                 options.AddPolicy(name: "ALL",
@@ -51,13 +54,16 @@ namespace CovidWorkflow
                 app.UseDeveloperExceptionPage();
                 app.UseCors("ALL");
             }
+            
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseSpaStaticFiles();
             
+
             //app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseSpa(c => { });
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
