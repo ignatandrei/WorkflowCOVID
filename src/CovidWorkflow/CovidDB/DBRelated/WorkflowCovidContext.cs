@@ -13,6 +13,27 @@ namespace CovidDB.ModelsSqlServer
     /// <seealso cref="Microsoft.EntityFrameworkCore.DbContext" />
     public partial class WorkflowCovidContext
     {
+        public void InitializeDatabase()
+        {
+            this.Anamnesis.AddRange(
+                ModelsSqlServer.Anamnesis.Create("Istoric fumat", "Nr PA")
+                );
+
+            this.CovidStatus.Add(new CovidStatus()
+            {
+                Name = "Suspect",
+            });
+            this.CovidStatus.Add(new CovidStatus()
+            {
+                Name = "Confirmat",
+            });
+
+            this.Location.AddRange(ModelsSqlServer.Location.Create("SpitalizareZi", "Spitalizare", "Acasa", "Iesit Evidenta"));
+
+            this.MedicalTests.AddRange(ModelsSqlServer.MedicalTests.Create("HLG", "VSH", "PROT C"));
+            this.SaveChanges();
+
+        }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder)
         {
