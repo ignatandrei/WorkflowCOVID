@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CovidWorkflow.ModelsSqlServer
+namespace CovidDB.ModelsSqlServer
 {
     public partial class Bed
     {

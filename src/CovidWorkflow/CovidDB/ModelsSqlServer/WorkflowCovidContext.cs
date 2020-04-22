@@ -2,12 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace CovidWorkflow.ModelsSqlServer
+namespace CovidDB.ModelsSqlServer
 {
     public partial class WorkflowCovidContext : DbContext
     {
        
-
         public WorkflowCovidContext(DbContextOptions<WorkflowCovidContext> options)
             : base(options)
         {
@@ -15,6 +14,7 @@ namespace CovidWorkflow.ModelsSqlServer
 
         public virtual DbSet<Anamnesis> Anamnesis { get; set; }
         public virtual DbSet<AnamnesisPatient> AnamnesisPatient { get; set; }
+        public virtual DbSet<Audit> Audit { get; set; }
         public virtual DbSet<Bed> Bed { get; set; }
         public virtual DbSet<BedPatient> BedPatient { get; set; }
         public virtual DbSet<CovidStatus> CovidStatus { get; set; }
@@ -27,10 +27,7 @@ namespace CovidWorkflow.ModelsSqlServer
         public virtual DbSet<Room> Room { get; set; }
         public virtual DbSet<StatusMedicalTest> StatusMedicalTest { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            
-        }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -68,6 +65,25 @@ namespace CovidWorkflow.ModelsSqlServer
                     .HasForeignKey(d => d.Idpatient)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_AnamnesisPatient_Patient");
+            });
+
+            modelBuilder.Entity<Audit>(entity =>
+            {
+                entity.HasKey(e => new { e.Id, e.TableName });
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.TableName).HasMaxLength(50);
+
+                entity.Property(e => e.DateTimeModified).HasColumnType("datetime");
+
+                entity.Property(e => e.KeyValues)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.NewValues).HasMaxLength(1000);
+
+                entity.Property(e => e.OldValues).HasMaxLength(1000);
             });
 
             modelBuilder.Entity<Bed>(entity =>

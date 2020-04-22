@@ -1,4 +1,4 @@
-USE [test]
+USE test
 GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PatientStatus]') AND type in (N'U'))
 ALTER TABLE [dbo].[PatientStatus] DROP CONSTRAINT IF EXISTS [FK_PatientStatus_Patient]
@@ -33,46 +33,53 @@ GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[AnamnesisPatient]') AND type in (N'U'))
 ALTER TABLE [dbo].[AnamnesisPatient] DROP CONSTRAINT IF EXISTS [FK_AnamnesisPatient_Anamnesis]
 GO
-/****** Object:  Table [dbo].[StatusMedicalTest]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[StatusMedicalTest]    Script Date: 4/22/2020 6:44:11 PM ******/
 DROP TABLE IF EXISTS [dbo].[StatusMedicalTest]
 GO
-/****** Object:  Table [dbo].[Room]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[Room]    Script Date: 4/22/2020 6:44:11 PM ******/
 DROP TABLE IF EXISTS [dbo].[Room]
 GO
-/****** Object:  Table [dbo].[PatientStatus]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[PatientStatus]    Script Date: 4/22/2020 6:44:11 PM ******/
 DROP TABLE IF EXISTS [dbo].[PatientStatus]
 GO
-/****** Object:  Table [dbo].[PatientMedicalTest]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[PatientMedicalTest]    Script Date: 4/22/2020 6:44:11 PM ******/
 DROP TABLE IF EXISTS [dbo].[PatientMedicalTest]
 GO
-/****** Object:  Table [dbo].[Patient]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[Patient]    Script Date: 4/22/2020 6:44:11 PM ******/
 DROP TABLE IF EXISTS [dbo].[Patient]
 GO
-/****** Object:  Table [dbo].[MedicalTests]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[MedicalTests]    Script Date: 4/22/2020 6:44:11 PM ******/
 DROP TABLE IF EXISTS [dbo].[MedicalTests]
 GO
-/****** Object:  Table [dbo].[LocationPatient]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[LocationPatient]    Script Date: 4/22/2020 6:44:11 PM ******/
 DROP TABLE IF EXISTS [dbo].[LocationPatient]
 GO
-/****** Object:  Table [dbo].[Location]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[Location]    Script Date: 4/22/2020 6:44:11 PM ******/
 DROP TABLE IF EXISTS [dbo].[Location]
 GO
-/****** Object:  Table [dbo].[CovidStatus]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[CovidStatus]    Script Date: 4/22/2020 6:44:11 PM ******/
 DROP TABLE IF EXISTS [dbo].[CovidStatus]
 GO
-/****** Object:  Table [dbo].[BedPatient]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[BedPatient]    Script Date: 4/22/2020 6:44:11 PM ******/
 DROP TABLE IF EXISTS [dbo].[BedPatient]
 GO
-/****** Object:  Table [dbo].[Bed]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[Bed]    Script Date: 4/22/2020 6:44:11 PM ******/
 DROP TABLE IF EXISTS [dbo].[Bed]
 GO
-/****** Object:  Table [dbo].[AnamnesisPatient]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[Audit]    Script Date: 4/22/2020 6:44:11 PM ******/
+DROP TABLE IF EXISTS [dbo].[Audit]
+GO
+/****** Object:  Table [dbo].[AnamnesisPatient]    Script Date: 4/22/2020 6:44:11 PM ******/
 DROP TABLE IF EXISTS [dbo].[AnamnesisPatient]
 GO
-/****** Object:  Table [dbo].[Anamnesis]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[Anamnesis]    Script Date: 4/22/2020 6:44:11 PM ******/
 DROP TABLE IF EXISTS [dbo].[Anamnesis]
 GO
-/****** Object:  Table [dbo].[Anamnesis]    Script Date: 4/22/2020 4:25:16 PM ******/
+
+/****** Object:  Database [WorkflowCovid]    Script Date: 4/22/2020 6:44:11 PM ******/
+USE [Test]
+GO
+/****** Object:  Table [dbo].[Anamnesis]    Script Date: 4/22/2020 6:44:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -87,7 +94,7 @@ CREATE TABLE [dbo].[Anamnesis](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AnamnesisPatient]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[AnamnesisPatient]    Script Date: 4/22/2020 6:44:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -104,7 +111,26 @@ CREATE TABLE [dbo].[AnamnesisPatient](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Bed]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[Audit]    Script Date: 4/22/2020 6:44:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Audit](
+	[ID] [uniqueidentifier] NOT NULL,
+	[TableName] [nvarchar](50) NOT NULL,
+	[DateTimeModified] [datetime] NOT NULL,
+	[KeyValues] [nvarchar](50) NOT NULL,
+	[OldValues] [nvarchar](1000) NULL,
+	[NewValues] [nvarchar](1000) NULL,
+ CONSTRAINT [PK_Audit] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC,
+	[TableName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Bed]    Script Date: 4/22/2020 6:44:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -119,7 +145,7 @@ CREATE TABLE [dbo].[Bed](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[BedPatient]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[BedPatient]    Script Date: 4/22/2020 6:44:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -135,7 +161,7 @@ CREATE TABLE [dbo].[BedPatient](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CovidStatus]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[CovidStatus]    Script Date: 4/22/2020 6:44:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -149,7 +175,7 @@ CREATE TABLE [dbo].[CovidStatus](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Location]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[Location]    Script Date: 4/22/2020 6:44:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -163,7 +189,7 @@ CREATE TABLE [dbo].[Location](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[LocationPatient]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[LocationPatient]    Script Date: 4/22/2020 6:44:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -179,7 +205,7 @@ CREATE TABLE [dbo].[LocationPatient](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[MedicalTests]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[MedicalTests]    Script Date: 4/22/2020 6:44:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -193,7 +219,7 @@ CREATE TABLE [dbo].[MedicalTests](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Patient]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[Patient]    Script Date: 4/22/2020 6:44:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -209,7 +235,7 @@ CREATE TABLE [dbo].[Patient](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PatientMedicalTest]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[PatientMedicalTest]    Script Date: 4/22/2020 6:44:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -227,7 +253,7 @@ CREATE TABLE [dbo].[PatientMedicalTest](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PatientStatus]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[PatientStatus]    Script Date: 4/22/2020 6:44:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -243,7 +269,7 @@ CREATE TABLE [dbo].[PatientStatus](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Room]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[Room]    Script Date: 4/22/2020 6:44:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -257,7 +283,7 @@ CREATE TABLE [dbo].[Room](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[StatusMedicalTest]    Script Date: 4/22/2020 4:25:16 PM ******/
+/****** Object:  Table [dbo].[StatusMedicalTest]    Script Date: 4/22/2020 6:44:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
