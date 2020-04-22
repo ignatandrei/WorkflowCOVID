@@ -42,8 +42,9 @@ namespace CovidWorkflow
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseDefaultFiles();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
