@@ -32,7 +32,15 @@ namespace CovidWorkflow
             services
                 .AddDbContext<WorkflowCovidContext>(opt=> 
                 opt.UseInMemoryDatabase("Test"));
-                        
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "ALL",
+                             builder =>
+                             {
+                                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                             });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +49,7 @@ namespace CovidWorkflow
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors("ALL");
             }
             app.UseStaticFiles();
             app.UseDefaultFiles();

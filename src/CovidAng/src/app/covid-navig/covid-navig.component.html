@@ -25,40 +25,46 @@
     Pacient nou:
     
     <mat-accordion>
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Personal data
           </mat-panel-title>
           <mat-panel-description>
-            <input matInput placeholder="nume pacient" [(ngModel)]="patient.name" />
-            <br />
-            <input matInput placeholder="telefon" [(ngModel)]="patient.phone" />
-            <br />
-            <br />
-            <input matInput placeholder="comentarii" [(ngModel)]="patient.comments" />
-            <br />
+            Nume, Telefon
           </mat-panel-description>
         </mat-expansion-panel-header>
-    
+       
+        
+
         <mat-form-field>
-          <mat-label>First name</mat-label>
-          <input matInput>
+          <mat-label>Nume</mat-label>
+          <input matInput placeholder="nume pacient" [(ngModel)]="patient.name" />
         </mat-form-field>
     
         <mat-form-field>
-          <mat-label>Age</mat-label>
-          <input matInput type="number" min="1">
+          <mat-label>Telefon</mat-label>
+          <input matInput placeholder="telefon" [(ngModel)]="patient.phone" />
+
         </mat-form-field>
+
+
+        
+        <mat-form-field>
+          <mat-label>Comentarii</mat-label>
+          <textarea matInput placeholder="comentarii" [(ngModel)]="patient.comments" ></textarea>
+        </mat-form-field>
+        
+        <button mat-raised-button color="primary" (click)="savePatient()">Salveaza</button>
+        
       </mat-expansion-panel>
-      <mat-expansion-panel (opened)="panelOpenState = true"
-                           (closed)="panelOpenState = false">
+      <mat-expansion-panel [disabled]="!canShow()" >
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Self aware panel
+            Anamneza
           </mat-panel-title>
           <mat-panel-description>
-            Currently I am {{panelOpenState ? 'open' : 'closed'}}
+            
           </mat-panel-description>
         </mat-expansion-panel-header>
         <p>I'm visible because I am open</p>
@@ -67,7 +73,7 @@
     <br />
     
 
-    <input matInput placeholder="nume pacient" [(ngModel)]="patient.name" />
+ 
     
   </mat-sidenav-content>
 </mat-sidenav-container>
