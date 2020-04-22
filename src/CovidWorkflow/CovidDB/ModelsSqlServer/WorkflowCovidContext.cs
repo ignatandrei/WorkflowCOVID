@@ -6,7 +6,10 @@ namespace CovidDB.ModelsSqlServer
 {
     public partial class WorkflowCovidContext : DbContext
     {
-       
+        public WorkflowCovidContext()
+        {
+        }
+
         public WorkflowCovidContext(DbContextOptions<WorkflowCovidContext> options)
             : base(options)
         {
@@ -27,7 +30,14 @@ namespace CovidDB.ModelsSqlServer
         public virtual DbSet<Room> Room { get; set; }
         public virtual DbSet<StatusMedicalTest> StatusMedicalTest { get; set; }
 
-        
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=WorkflowCovid;UID=sa;PWD=<YourStrong@Passw0rd>");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -74,6 +84,8 @@ namespace CovidDB.ModelsSqlServer
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.TableName).HasMaxLength(50);
+
+                entity.Property(e => e.CorrelationId).HasColumnName("CorrelationID");
 
                 entity.Property(e => e.DateTimeModified).HasColumnType("datetime");
 
@@ -128,9 +140,7 @@ namespace CovidDB.ModelsSqlServer
 
             modelBuilder.Entity<CovidStatus>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -139,9 +149,7 @@ namespace CovidDB.ModelsSqlServer
 
             modelBuilder.Entity<Location>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Name)
                     .IsRequired()

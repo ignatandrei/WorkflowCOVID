@@ -25,6 +25,7 @@ namespace CovidDB.ModelsSqlServer
         public Audit ToAudit()
         {
             var audit = new Audit();
+            audit.Id = Guid.NewGuid();
             audit.TableName = TableName;           
             audit.KeyValues = JsonConvert.SerializeObject(KeyValues);
             audit.OldValues = OldValues.Count == 0 ? null : JsonConvert.SerializeObject(OldValues);

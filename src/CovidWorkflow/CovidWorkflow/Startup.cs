@@ -53,6 +53,11 @@ namespace CovidWorkflow
             {
                 endpoints.MapControllers();
             });
+            var sp = app.ApplicationServices;
+            using var scope = sp.CreateScope();
+            
+            using var db= scope.ServiceProvider.GetService<WorkflowCovidContext>();
+            db.CreateDB();
         }
     }
 }

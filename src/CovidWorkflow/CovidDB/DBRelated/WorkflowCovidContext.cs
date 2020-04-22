@@ -13,8 +13,10 @@ namespace CovidDB.ModelsSqlServer
     /// <seealso cref="Microsoft.EntityFrameworkCore.DbContext" />
     public partial class WorkflowCovidContext
     {
-        public void InitializeDatabase()
+        public void CreateDB()
         {
+            this.Database.EnsureDeleted();
+            this.Database.EnsureCreated();
             this.Anamnesis.AddRange(
                 ModelsSqlServer.Anamnesis.Create("Istoric fumat", "Nr PA")
                 );
@@ -40,12 +42,21 @@ namespace CovidDB.ModelsSqlServer
             //just for see that this partial works
 
         }
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            var auditEntries = OnBeforeSaveChanges();
+            var result= base.SaveChanges(acceptAllChangesOnSuccess);
+            if(OnAfterSaveChanges(auditEntries))
+                base.SaveChanges();
+            return result;
+        }
         public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
 
             var auditEntries = OnBeforeSaveChanges();
             var result = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-            await OnAfterSaveChanges(auditEntries);
+            if( OnAfterSaveChanges(auditEntries))
+                await base.SaveChangesAsync();
             return result;
 
         }
@@ -106,7 +117,7 @@ namespace CovidDB.ModelsSqlServer
             {
                 var entry = auditEntry.ToAudit();
                 entry.DateTimeModified = dateTimeModified;
-                entry.Id = g;
+                entry.CorrelationId = g;
 
                 Audit.Add(entry);
             }
@@ -115,10 +126,10 @@ namespace CovidDB.ModelsSqlServer
             return auditEntries.Where(_ => _.HasTemporaryProperties).ToList();
         }
 
-        private Task OnAfterSaveChanges(List<AuditEntry> auditEntries)
+        private bool OnAfterSaveChanges(List<AuditEntry> auditEntries)
         {
             if (auditEntries == null || auditEntries.Count == 0)
-                return Task.CompletedTask;
+                return false;
             
             foreach (var auditEntry in auditEntries)
             {
@@ -139,7 +150,7 @@ namespace CovidDB.ModelsSqlServer
                 Audit.Add(auditEntry.ToAudit());
             }
 
-            return SaveChangesAsync();
+            return true;
         }
     }
 }

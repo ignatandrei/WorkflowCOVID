@@ -11,5 +11,6 @@ namespace CovidDB.ModelsSqlServer
         public string KeyValues { get; set; }
         public string OldValues { get; set; }
         public string NewValues { get; set; }
+        public Guid? CorrelationId { get; set; }
     }
 }
