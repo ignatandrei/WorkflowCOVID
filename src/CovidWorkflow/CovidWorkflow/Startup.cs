@@ -51,8 +51,9 @@ namespace CovidWorkflow
                 app.UseDeveloperExceptionPage();
                 app.UseCors("ALL");
             }
-            app.UseStaticFiles();
             app.UseDefaultFiles();
+            app.UseStaticFiles();
+            
             //app.UseHttpsRedirection();
 
             app.UseRouting();
