@@ -25,8 +25,10 @@
           request.send(null);
 
           if (request.status === 200) {
-            console.log(`found ${hrefApp} `);
-            break;
+            if(request.responseText.indexOf("meta name=")<1){
+              console.log(`found ${hrefApp} `);
+              break;
+            }
           }
         }
       }
