@@ -1,0 +1,23 @@
+<mat-form-field>
+    
+    <input
+      matInput
+      placeholder="nume,cnp"
+      [(ngModel)]="Search"
+    />
+   
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="searchPatient()">
+    Cauta!
+  </button>
+  {{foundPat?.length}}
+  <div *ngFor="let pat of foundPat">
+    <mat-card>
+        <mat-card-header>Nume: {{pat.name}} Telefon {{pat.phone}} </mat-card-header>
+        <mat-card-content>{{pat.comments}}</mat-card-content>
+    </mat-card>
+    <mat-card-actions>
+        <a  [routerLink]="['/patient', pat.id]" mat-raised-button color="primary">Vizualizeaza</a>
+        
+      </mat-card-actions>
+  </div>

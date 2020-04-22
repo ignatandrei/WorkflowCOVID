@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Patient } from 'src/classes/Patient';
 import { environment } from 'src/environments/environment';
+import { Anamnesis } from 'src/classes/Anamnesis';
+import { AnamnesisPatient } from 'src/classes/AnamnesisPatient';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,4 +19,16 @@ export class WebapiService {
       const url = environment.url + 'api/Patients/';
       return this.http.post<Patient>(url, p, this.httpOptions);
   }
+  public GetPatient( id: number ): Observable<Patient> {
+    const url = environment.url + 'api/Patients/'+ id;
+    return this.http.get<Patient>(url,  this.httpOptions);
+}
+  public GetAnamnesis( ): Observable<Anamnesis[]> {
+    const url = environment.url + 'api/Anamnesis/';
+    return this.http.get<Anamnesis[]>(url, this.httpOptions);
+}
+public CreateAnamnesis(ap: AnamnesisPatient ): Observable<AnamnesisPatient> {
+  const url = environment.url + 'api/AnamnesisPatients/';
+  return this.http.post<AnamnesisPatient>(url, ap, this.httpOptions);
+}
 }

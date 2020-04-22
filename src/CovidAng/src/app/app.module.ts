@@ -42,11 +42,17 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
+import { SearchPatientComponent } from './search-patient/search-patient.component';
+import { NewPatientComponent } from './new-patient/new-patient.component';
+import { DetailsPatientComponent } from './details-patient/details-patient.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CovidNavigComponent,
+    SearchPatientComponent,
+    NewPatientComponent,
+    DetailsPatientComponent,
     
   ],
   imports: [
