@@ -1,13 +1,13 @@
-<p>Number rooms: {{roomsId.size}}</p>
+<p>Numar camere : {{roomsId.size}} Numar pacienti {{nrPatients}}</p>
 <mat-accordion multi="true">
     <mat-expansion-panel *ngFor="let g of roomsId| keyvalue"> 
         <mat-expansion-panel-header>
             <mat-panel-title>
-            Room :{{g.value[0].idroomNavigation.name }}
+            Camera :{{g.value[0].idroomNavigation.name }}
             </mat-panel-title>
             <mat-panel-description>
-              Number beds:  {{g.value.length }}
-            
+              Numar paturi:  {{g.value.length }}
+                
             </mat-panel-description>
           </mat-expansion-panel-header>
           <table>
