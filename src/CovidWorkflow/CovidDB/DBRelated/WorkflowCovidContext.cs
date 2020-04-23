@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace CovidDB.ModelsSqlServer
 {
     /// <summary>
-    /// Scaffold-DbContext 'Data Source=.;Initial Catalog=WorkflowCovid;UID=sa;PWD=<YourStrong@Passw0rd>' Microsoft.EntityFrameworkCore.SqlServer -OutputDir ModelsSqlServer            
+    /// Scaffold-DbContext 'Data Source=.;Initial Catalog=WorkflowCovid;UID=sa;PWD=<YourStrong@Passw0rd>' Microsoft.EntityFrameworkCore.SqlServer -OutputDir ModelsSqlServer  -DataAnnotations          
     /// </summary>
     /// <seealso cref="Microsoft.EntityFrameworkCore.DbContext" />
     public partial class WorkflowCovidContext

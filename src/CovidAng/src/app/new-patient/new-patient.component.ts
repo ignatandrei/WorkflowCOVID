@@ -100,7 +100,7 @@ public BR: Map<number, BedWithRoom[]>;
 
   }
   public saveStatus(){
-
+    
   }
 
 }

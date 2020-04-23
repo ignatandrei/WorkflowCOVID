@@ -41,28 +41,9 @@ namespace CovidDB.ModelsSqlServer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Anamnesis>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
             modelBuilder.Entity<AnamnesisPatient>(entity =>
             {
                 entity.HasKey(e => new { e.Idpatient, e.Idanamnesis });
-
-                entity.Property(e => e.Idpatient).HasColumnName("IDPatient");
-
-                entity.Property(e => e.Idanamnesis).HasColumnName("IDAnamnesis");
-
-                entity.Property(e => e.Date).HasColumnType("datetime");
-
-                entity.Property(e => e.Details)
-                    .IsRequired()
-                    .HasMaxLength(500);
 
                 entity.HasOne(d => d.IdanamnesisNavigation)
                     .WithMany(p => p.AnamnesisPatient)
@@ -80,34 +61,12 @@ namespace CovidDB.ModelsSqlServer
             modelBuilder.Entity<Audit>(entity =>
             {
                 entity.HasKey(e => new { e.Id, e.TableName });
-
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.TableName).HasMaxLength(50);
-
-                entity.Property(e => e.CorrelationId).HasColumnName("CorrelationID");
-
-                entity.Property(e => e.DateTimeModified).HasColumnType("datetime");
-
-                entity.Property(e => e.KeyValues)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.NewValues).HasMaxLength(1000);
-
-                entity.Property(e => e.OldValues).HasMaxLength(1000);
             });
 
             modelBuilder.Entity<Bed>(entity =>
             {
                 entity.HasKey(e => e.Idbed)
                     .HasName("PK_BedInRoom");
-
-                entity.Property(e => e.Idbed).HasColumnName("IDBed");
-
-                entity.Property(e => e.Idroom).HasColumnName("IDRoom");
-
-                entity.Property(e => e.Name).HasMaxLength(50);
 
                 entity.HasOne(d => d.IdroomNavigation)
                     .WithMany(p => p.Bed)
@@ -118,12 +77,6 @@ namespace CovidDB.ModelsSqlServer
             modelBuilder.Entity<BedPatient>(entity =>
             {
                 entity.HasKey(e => new { e.Idpatient, e.Idbed });
-
-                entity.Property(e => e.Idpatient).HasColumnName("IDPatient");
-
-                entity.Property(e => e.Idbed).HasColumnName("IDBed");
-
-                entity.Property(e => e.DateModification).HasColumnType("datetime");
 
                 entity.HasOne(d => d.IdbedNavigation)
                     .WithMany(p => p.BedPatient)
@@ -138,33 +91,9 @@ namespace CovidDB.ModelsSqlServer
                     .HasConstraintName("FK_BedPatient_Patient");
             });
 
-            modelBuilder.Entity<CovidStatus>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<Location>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
             modelBuilder.Entity<LocationPatient>(entity =>
             {
                 entity.HasKey(e => new { e.Idpatient, e.Idlocation });
-
-                entity.Property(e => e.Idpatient).HasColumnName("IDPatient");
-
-                entity.Property(e => e.Idlocation).HasColumnName("IDLocation");
-
-                entity.Property(e => e.DateModif).HasColumnType("datetime");
 
                 entity.HasOne(d => d.IdlocationNavigation)
                     .WithMany(p => p.LocationPatient)
@@ -179,43 +108,9 @@ namespace CovidDB.ModelsSqlServer
                     .HasConstraintName("FK_LocationPatient_Patient");
             });
 
-            modelBuilder.Entity<MedicalTests>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<Patient>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Comments).HasMaxLength(50);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(500);
-
-                entity.Property(e => e.Phone)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
             modelBuilder.Entity<PatientMedicalTest>(entity =>
             {
                 entity.HasKey(e => new { e.Idpacient, e.IdmedicalTest });
-
-                entity.Property(e => e.Idpacient).HasColumnName("IDPacient");
-
-                entity.Property(e => e.IdmedicalTest).HasColumnName("IDMedicalTest");
-
-                entity.Property(e => e.DateModification).HasColumnType("datetime");
-
-                entity.Property(e => e.IdmedicalTestStatus).HasColumnName("IDMedicalTestStatus");
-
-                entity.Property(e => e.Result).HasMaxLength(50);
 
                 entity.HasOne(d => d.IdmedicalTestNavigation)
                     .WithMany(p => p.PatientMedicalTest)
@@ -234,12 +129,6 @@ namespace CovidDB.ModelsSqlServer
             {
                 entity.HasKey(e => new { e.Idpatient, e.Idstatus });
 
-                entity.Property(e => e.Idpatient).HasColumnName("IDPatient");
-
-                entity.Property(e => e.Idstatus).HasColumnName("IDStatus");
-
-                entity.Property(e => e.DateModification).HasColumnType("datetime");
-
                 entity.HasOne(d => d.IdpatientNavigation)
                     .WithMany(p => p.PatientStatus)
                     .HasForeignKey(d => d.Idpatient)
@@ -251,22 +140,6 @@ namespace CovidDB.ModelsSqlServer
                     .HasForeignKey(d => d.Idstatus)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PatientStatus_CovidStatus");
-            });
-
-            modelBuilder.Entity<Room>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Name).HasMaxLength(100);
-            });
-
-            modelBuilder.Entity<StatusMedicalTest>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
             });
 
             OnModelCreatingPartial(modelBuilder);

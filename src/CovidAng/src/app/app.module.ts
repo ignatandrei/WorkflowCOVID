@@ -46,6 +46,7 @@ import { SearchPatientComponent } from './search-patient/search-patient.componen
 import { NewPatientComponent } from './new-patient/new-patient.component';
 import { DetailsPatientComponent } from './details-patient/details-patient.component';
 import { BedSituationComponent } from './bed-situation/bed-situation.component';
+import { httpInterceptorProviders } from './general/barrelInterceptors';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,9 @@ import { BedSituationComponent } from './bed-situation/bed-situation.component';
 
 
   ],
-  providers: [],
+  providers: [
+    httpInterceptorProviders,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

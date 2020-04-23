@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace CovidDB
 {
+    
     public class BedRelated
     {
         private readonly WorkflowCovidContext context;
