@@ -9,6 +9,7 @@ import { AnamnesisPatient } from 'src/classes/AnamnesisPatient';
 import { ReturnStatement } from '@angular/compiler';
 import { ErrorService } from '../general/error.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { LoaderService } from '../general/loader.service';
 
 @Component({
   selector: 'app-covid-navig',
@@ -16,16 +17,20 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./covid-navig.component.css']
 })
 export class CovidNavigComponent  {
-
-  constructor(private breakpointObserver: BreakpointObserver, private err: ErrorService , private _snackBar: MatSnackBar) {
+  public isLoading = false;
+  constructor(private breakpointObserver: BreakpointObserver
+    ,         private err: ErrorService
+    ,         private snackBar: MatSnackBar
+    ,         private ls: LoaderService) {
     this.err.NextError().pipe(
       tap(it => {
-        this._snackBar.open(it, 'ERROR', {
+        this.snackBar.open(it, 'ERROR', {
           duration: 5000,
         });
       }),
       shareReplay()
     ).subscribe();
+    this.ls.loading$().subscribe(it => this.isLoading = it);
 
   }
 
@@ -35,7 +40,7 @@ export class CovidNavigComponent  {
       shareReplay()
     );
 
-    
+
 
 
 

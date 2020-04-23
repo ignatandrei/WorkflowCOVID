@@ -6,20 +6,20 @@ import { Subject, Observable } from 'rxjs';
 })
 export class ErrorService {
 
-  private err : Subject<string>;
-  
-  constructor() { 
+  private err: Subject<string>;
+
+  constructor() {
     this.err = new Subject<string>();
   }
 
-  public NextError(): Observable<string>{
+  public NextError(): Observable<string> {
 
     return this.err.asObservable();
 
   }
 
-  public setNextError(str: string){
-    
+  public setNextError(str: string) {
+
     this.err.next(str);
 
   }

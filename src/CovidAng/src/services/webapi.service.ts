@@ -34,11 +34,7 @@ export class WebapiService {
     const url = environment.url + 'api/Anamnesis/';
     return this.http.get<Anamnesis[]>(url, this.httpOptions);
   }
-  public CreateAnamnesis(ap: AnamnesisPatient): Observable<AnamnesisPatient> {
-    const url = environment.url + 'api/AnamnesisPatients/';
-    return this.http.post<AnamnesisPatient>(url, ap, this.httpOptions);
-  }
-  public GetStatus(): Observable<IdName[]> {
+    public GetStatus(): Observable<IdName[]> {
     const url = environment.url + 'api/CovidStatus/';
     return this.http.get<IdName[]>(url, this.httpOptions);
   }

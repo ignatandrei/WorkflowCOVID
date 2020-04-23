@@ -11,9 +11,9 @@ import { ErrorService } from './error.service';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  
+
   constructor(private err: ErrorService ) {
-    
+
 
   }
   intercept(req: HttpRequest<any>, next: HttpHandler):
@@ -27,14 +27,14 @@ export class ErrorInterceptor implements HttpInterceptor {
   private handleError(req: HttpRequest<any>, error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
-      const str='An error occurred:' +   error.error.message;
+      const str = 'An error occurred:' +   error.error.message;
       console.log(str);
       this.err.setNextError(str);
 
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
-      const str=
+      const str =
         `Backend returned code ${error.status}, ` +
         `body was: ${JSON.stringify(error.error)}`;
       console.log(str);

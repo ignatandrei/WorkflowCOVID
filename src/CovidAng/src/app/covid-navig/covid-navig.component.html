@@ -32,6 +32,7 @@
       <a mat-button color="accent" routerLink="/searchPatient">Cauta Pacient</a>
       <a mat-button color="accent" routerLink="/bedSituation">Situatia paturi</a>
     </mat-toolbar>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
     <router-outlet></router-outlet>
     
 

@@ -49,7 +49,7 @@ Pacient nou:
     <ng-template ngFor let-i="index" let-anam [ngForOf]="allAnamnesis">
       <mat-form-field>
         <mat-label>{{ anam.name }}</mat-label>
-        <input matInput placeholder="anam.name" [(ngModel)]="resultAnam[i]" />
+        <input matInput placeholder="anam.name" [(ngModel)]="resultAnam[i].details" />
       </mat-form-field>
     </ng-template>
     <div>

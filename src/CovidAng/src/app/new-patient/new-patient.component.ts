@@ -9,6 +9,7 @@ import { IdName } from 'src/classes/IdName';
 import { SearchBedService } from 'src/services/search-bed.service';
 import { BedWithRoom } from 'src/classes/BedWithRoom';
 import { Room } from 'src/classes/Room';
+import { CreateDeleteService } from 'src/services/create-delete.service';
 
 @Component({
   selector: 'app-new-patient',
@@ -25,13 +26,13 @@ public medicalTests: number[];
 
 
 public allAnamnesis: Anamnesis[] = [];
-public resultAnam: string[] = [];
+public resultAnam: AnamnesisPatient[] = [];
 public CovidStatus: IdName[];
 public Location: IdName[];
 public MedicalTest: IdName[];
 public BR: Map<number, BedWithRoom[]>;
 
-  constructor(private ws: WebapiService, private sb: SearchBedService ) {
+  constructor(private ws: WebapiService, private sb: SearchBedService, private cd: CreateDeleteService ) {
     this.patient = new Patient();
     ws.GetAnamnesis()
       .pipe(
@@ -43,9 +44,14 @@ public BR: Map<number, BedWithRoom[]>;
             }
             return d;
           });
-          this.resultAnam.length = it.length;
-        })
-      ).subscribe();
+          this.allAnamnesis.forEach(an => {
+            const ap  = new AnamnesisPatient();
+            ap.idanamnesis = an.id;
+            this.resultAnam.push(ap);
+          }
+        );
+        }
+      )).subscribe();
     ws.GetStatus().subscribe(it => this.CovidStatus = it);
     ws.GetLocation().subscribe(it => this.Location = it);
     ws.GetMedicalTest().subscribe(it => this.MedicalTest = it.sort((a, b) => a.name.localeCompare(b.name)));
@@ -82,25 +88,16 @@ public BR: Map<number, BedWithRoom[]>;
     return this.patient.id > 0;
   }
   public saveAnam(): void {
-    const toSave = this.resultAnam;
-    console.log(toSave);
-    const res = toSave.map((it, index) => {
-      const s = new AnamnesisPatient();
-      s.idanamnesis = this.allAnamnesis[index].id;
-      s.idpatient = this.patient.id;
-      s.details  = this.resultAnam[index];
-      return s;
-    })
-      .filter(it => it.details?.trim().length > 0)
-      .map(it => this.ws.CreateAnamnesis(it));
-    console.log(res.length);
-    const obs = forkJoin(res).subscribe();
-
+    const toSave = this.resultAnam
+      .filter(it => it.details?.trim().length > 0);
+    this.cd.CreateAnamnesis(this.patient.id, toSave).subscribe(
+      it => window.alert(it)
+    );
 
 
   }
-  public saveStatus(){
-    
+  public saveStatus() {
+
   }
 
 }
