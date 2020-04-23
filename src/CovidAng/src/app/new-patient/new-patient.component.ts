@@ -13,6 +13,7 @@ import { CreateDeleteService } from 'src/services/create-delete.service';
 import { PatientStatus } from 'src/classes/PatientStatus';
 import { LocationPatient } from 'src/classes/LocationPatient';
 import { BedPatient } from 'src/classes/BedPatient';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-patient',
@@ -36,7 +37,10 @@ public MedicalTest: IdName[];
 public BR: Map<number, BedWithRoom[]>;
 public idBed: number;
 
-  constructor(private ws: WebapiService, private sb: SearchBedService, private cd: CreateDeleteService ) {
+  constructor(private ws: WebapiService, 
+    private sb: SearchBedService, 
+    private cd: CreateDeleteService ,
+    private router: Router) {
     this.patient = new Patient();
     ws.GetAnamnesis()
       .pipe(
@@ -115,7 +119,7 @@ public idBed: number;
     bp.idbed = +this.idBed;
     this.cd.CreateBed(bp).subscribe();
 
-
+    this.router.navigateByUrl('/patient/'+this.patient.id );
 
   }
 
