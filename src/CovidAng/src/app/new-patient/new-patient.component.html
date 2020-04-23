@@ -1,62 +1,95 @@
 Pacient nou:
-    <mat-accordion>
-        <mat-expansion-panel [expanded]="!patientSaved()">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Personal data
-            </mat-panel-title>
-            <mat-panel-description>
-              Nume {{ patient.name }} , Telefon {{ patient.phone }}
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-  
-          <mat-form-field>
-            <mat-label>Nume</mat-label>
-            <input
-              matInput
-              placeholder="nume pacient"
-              [(ngModel)]="patient.name"
-            />
-          </mat-form-field>
-  
-          <mat-form-field>
-            <mat-label>Telefon</mat-label>
-            <input matInput placeholder="telefon" [(ngModel)]="patient.phone" />
-          </mat-form-field>
-  
-          <mat-form-field>
-            <mat-label>Comentarii</mat-label>
-            <textarea
-              matInput
-              placeholder="comentarii"
-              [(ngModel)]="patient.comments"
-            ></textarea>
-          </mat-form-field>
-  
-          <button mat-raised-button color="primary" (click)="savePatient()">
-            Introdu pacient
-          </button>
-        </mat-expansion-panel>
-        <mat-expansion-panel [disabled]="!patientSaved()" [expanded]="patientSaved()">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Anamneza
-            </mat-panel-title>
-            <mat-panel-description>
-              Pacient {{ patient.name }}
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          
-            <ng-template ngFor let-i="index" let-anam [ngForOf]="allAnamnesis">
-              <mat-form-field>
-                <mat-label>{{ anam.name }}</mat-label>
-                <input matInput placeholder="anam.name" [(ngModel)]="resultAnam[i]" />
-              </mat-form-field>
-            </ng-template>
-            <div>
-            <button mat-raised-button color="primary" (click)="saveAnam()">
-              Salveaza anamneza
-            </button>
-            </div>
-        </mat-expansion-panel>
-      </mat-accordion>
+<mat-accordion>
+  <mat-expansion-panel [expanded]="!patientSaved()">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Personal data
+      </mat-panel-title>
+      <mat-panel-description>
+        Nume {{ patient.name }} , Telefon {{ patient.phone }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field>
+      <mat-label>Nume</mat-label>
+      <input matInput placeholder="nume pacient" [(ngModel)]="patient.name" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Telefon</mat-label>
+      <input matInput placeholder="telefon" [(ngModel)]="patient.phone" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Comentarii</mat-label>
+      <textarea
+        matInput
+        placeholder="comentarii"
+        [(ngModel)]="patient.comments"
+      ></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="savePatient()">
+      Introdu pacient
+    </button>
+  </mat-expansion-panel>
+  <mat-expansion-panel [disabled]="!patientSaved()" [expanded]="patientSaved()">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Anamneza
+      </mat-panel-title>
+      <mat-panel-description>
+        Pacient {{ patient.name }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <ng-template ngFor let-i="index" let-anam [ngForOf]="allAnamnesis">
+      <mat-form-field>
+        <mat-label>{{ anam.name }}</mat-label>
+        <input matInput placeholder="anam.name" [(ngModel)]="resultAnam[i]" />
+      </mat-form-field>
+    </ng-template>
+    <div>
+      <button mat-raised-button color="primary" (click)="saveAnam()">
+        Salveaza anamneza
+      </button>
+    </div>
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Decizie
+      </mat-panel-title>
+      <mat-panel-description>
+        Internare, salon, acasa , teste
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-form-field>
+      <mat-label>Decizie pacient</mat-label>
+      <select matNativeControl [(ngModel)]="covidStatus" >
+        <option value="0" disabled selected></option>
+        <option *ngFor="let it of CovidStatus">
+          {{ it.name }}
+        </option>
+      </select>
+    </mat-form-field>
+    <mat-form-field>
+    <mat-label>Internare</mat-label>
+    <select matNativeControl  [(ngModel)]="location">
+      <option value="0" disabled selected></option>
+      <option *ngFor="let it of Location">
+        {{ it.name }}
+      </option>
+    </select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Teste</mat-label>
+    <mat-select multiple  style="width:200px">
+      
+      <mat-option *ngFor="let it of MedicalTest"  [value]="it.id" >
+        {{ it.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  </mat-expansion-panel>
+</mat-accordion>

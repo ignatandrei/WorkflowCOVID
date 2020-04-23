@@ -13,60 +13,7 @@ namespace CovidDB.ModelsSqlServer
     /// <seealso cref="Microsoft.EntityFrameworkCore.DbContext" />
     public partial class WorkflowCovidContext
     {
-        public void CreateDB()
-        {
-            this.Database.EnsureDeleted();
-            this.Database.EnsureCreated();
-            this.Anamnesis.AddRange(
-                ModelsSqlServer.Anamnesis.Create(
-                    "Istoric fumat", "Nr PA", "medicatie personala",
-                    "Obezitate",
-"IMC",
-"HTA",
-"Diabet zaharat",
-"Link epidemiologic",
-"Contact COVID",
-"Cu cine a avut contact",
-"Expunere la noxe",
-"Ce expunere",
-"Alte APP",
-"Febra",
-"Temperatura",
-"Dispnee",
-"mMRC",
-"Tuse",
-"Anosmie",
-"Fatigabilitate",
-"Scaderea apetitului",
-"Cefalee",
-"Angina faringiana",
-"Frison",
-"Rinoree",
-"Greata",
-"Varsaturi",
-"Diaree",
-"Scaune diareice",
-"Name",
-"Debutul simptomelor"
-
-                   )
-                );
-
-            this.CovidStatus.Add(new CovidStatus()
-            {
-                Name = "Suspect",
-            });
-            this.CovidStatus.Add(new CovidStatus()
-            {
-                Name = "Confirmat",
-            });
-
-            this.Location.AddRange(ModelsSqlServer.Location.Create("SpitalizareZi", "Spitalizare", "Acasa", "Iesit Evidenta"));
-
-            this.MedicalTests.AddRange(ModelsSqlServer.MedicalTests.Create("HLG", "VSH", "PROT C"));
-            this.SaveChanges();
-
-        }
+       
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder)
         {

@@ -5,6 +5,7 @@ import { tap } from 'rxjs/operators';
 import { Anamnesis } from 'src/classes/Anamnesis';
 import { AnamnesisPatient } from 'src/classes/AnamnesisPatient';
 import { forkJoin } from 'rxjs';
+import { IdName } from 'src/classes/IdName';
 
 @Component({
   selector: 'app-new-patient',
@@ -15,8 +16,18 @@ export class NewPatientComponent implements OnInit {
 
 
 public patient: Patient;
+public covidStatus = 0;
+public location = 0;
+public medicalTests: number[];
+
+
 public allAnamnesis: Anamnesis[] = [];
 public resultAnam: string[] = [];
+public CovidStatus: IdName[];
+public Location: IdName[];
+public MedicalTest: IdName[];
+
+
   constructor(private ws: WebapiService) {
     this.patient = new Patient();
     ws.GetAnamnesis()
@@ -32,6 +43,9 @@ public resultAnam: string[] = [];
           this.resultAnam.length = it.length;
         })
       ).subscribe();
+    ws.GetStatus().subscribe(it => this.CovidStatus = it);
+    ws.GetLocation().subscribe(it => this.Location = it);
+    ws.GetMedicalTest().subscribe(it => this.MedicalTest = it.sort((a, b) => a.name.localeCompare(b.name)));
   }
 
 

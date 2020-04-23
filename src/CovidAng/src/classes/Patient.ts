@@ -5,3 +5,5 @@ export class Patient {
   public comments: string ;
   
 }
+
+
