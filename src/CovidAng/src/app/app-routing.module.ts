@@ -4,6 +4,7 @@ import { CovidNavigComponent } from './covid-navig/covid-navig.component';
 import { SearchPatientComponent } from './search-patient/search-patient.component';
 import { NewPatientComponent } from './new-patient/new-patient.component';
 import { DetailsPatientComponent } from './details-patient/details-patient.component';
+import { BedSituationComponent } from './bed-situation/bed-situation.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   { path: 'searchPatient', component: SearchPatientComponent },
+  { path: 'bedSituation', component: BedSituationComponent },
   { path: 'patient/:id', component: DetailsPatientComponent }
 ];
 

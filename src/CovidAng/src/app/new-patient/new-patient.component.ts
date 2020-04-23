@@ -72,8 +72,9 @@ public BR: Map<number, BedWithRoom[]>;
   }
 
   public savePatient() {
-    this.ws.CreatePatient(this.patient).subscribe(
-      it => this.patient = it
+
+    this.ws.CreatePatientOrSave(this.patient).subscribe(
+      it => this.patient =  new Patient(it)
     );
   }
 
@@ -96,6 +97,9 @@ public BR: Map<number, BedWithRoom[]>;
     const obs = forkJoin(res).subscribe();
 
 
+
+  }
+  public saveStatus(){
 
   }
 

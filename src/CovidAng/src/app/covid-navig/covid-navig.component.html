@@ -12,6 +12,7 @@
     <mat-nav-list>
       <a mat-list-item routerLink="/newPatient">Pacient nou</a>
       <a mat-list-item routerLink="/searchPatient">Cauta pacient</a>
+      <a mat-list-item routerLink="/bedSituation">Situatie paturi</a>
       
     </mat-nav-list>
   </mat-sidenav>
@@ -27,6 +28,9 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>Workflow </span>
+      <a mat-button color="accent" routerLink="/newPatient">Pacient nou</a>
+      <a mat-button color="accent" routerLink="/searchPatient">Cauta Pacient</a>
+      <a mat-button color="accent" routerLink="/bedSituation">Situatia paturi</a>
     </mat-toolbar>
     <router-outlet></router-outlet>
     

@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { Anamnesis } from 'src/classes/Anamnesis';
 import { AnamnesisPatient } from 'src/classes/AnamnesisPatient';
 import { IdName } from 'src/classes/IdName';
+import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
@@ -15,8 +16,14 @@ export class WebapiService {
   };
   constructor(private http: HttpClient) {}
 
-  public CreatePatient(p: Patient): Observable<Patient> {
+  public CreatePatientOrSave(p: Patient): Observable<Patient> {
     const url = environment.url + 'api/Patients/';
+    if ((+p.id) > 0) {
+       return this.http.put<Patient>(url + p.id, p, this.httpOptions).pipe
+       (
+         map( _ => p)
+       );
+    }
     return this.http.post<Patient>(url, p, this.httpOptions);
   }
   public GetPatient(id: number): Observable<Patient> {

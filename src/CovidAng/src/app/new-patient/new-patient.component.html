@@ -29,8 +29,11 @@ Pacient nou:
       ></textarea>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" (click)="savePatient()">
+    <button mat-raised-button color="primary" (click)="savePatient()" *ngIf="patient.id == 0">
       Introdu pacient
+    </button>
+    <button mat-raised-button color="primary" (click)="savePatient()" *ngIf="patient.id>0" > 
+      Salveaza date pentru {{patient.name}}
     </button>
   </mat-expansion-panel>
   <mat-expansion-panel [disabled]="!patientSaved()" [expanded]="patientSaved()">
@@ -96,13 +99,16 @@ Pacient nou:
     <mat-label>Alege pat</mat-label>
     <mat-select style="width:200px" >
       <mat-option value="0">-- None --</mat-option>
-      <mat-optgroup *ngFor="let group of BR.keys()" [label]="BR.get(group)[0].idroomNavigation.name"
+      <mat-optgroup *ngFor="let group of BR | keyvalue " [label]="group.value[0].idroomNavigation.name"
                     [disabled]="false">
-        <mat-option *ngFor="let bed of BR.get(group)" [value]="bed.idbed" [disabled]="false">
+        <mat-option *ngFor="let bed of group.value" [value]="bed.idbed" [disabled]="false">
           {{bed.name}}
         </mat-option>
       </mat-optgroup>
     </mat-select>
   </mat-form-field>
+  <button mat-raised-button color="primary" (click)="saveStatus()">
+    Salveaza 
+  </button>
   </mat-expansion-panel>
 </mat-accordion>

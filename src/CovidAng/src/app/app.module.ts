@@ -45,6 +45,7 @@ import {MatTreeModule} from '@angular/material/tree';
 import { SearchPatientComponent } from './search-patient/search-patient.component';
 import { NewPatientComponent } from './new-patient/new-patient.component';
 import { DetailsPatientComponent } from './details-patient/details-patient.component';
+import { BedSituationComponent } from './bed-situation/bed-situation.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { DetailsPatientComponent } from './details-patient/details-patient.compo
     SearchPatientComponent,
     NewPatientComponent,
     DetailsPatientComponent,
+    BedSituationComponent,
     
   ],
   imports: [
