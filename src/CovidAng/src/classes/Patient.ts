@@ -1,8 +1,8 @@
 export class Patient {
   constructor(source: Patient = null) {
-    this.id=0;
+    this.id = 0;
     // tslint:disable-next-line: forin
-    for(const x in source){
+    for (const x in source) {
       this[ x ] = source[x];
     }
   }
