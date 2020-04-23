@@ -17,21 +17,27 @@ export class NewPatientComponent implements OnInit {
 public patient: Patient;
 public allAnamnesis: Anamnesis[] = [];
 public resultAnam: string[] = [];
-  constructor(private ws: WebapiService) { 
+  constructor(private ws: WebapiService) {
     this.patient = new Patient();
     ws.GetAnamnesis()
       .pipe(
         tap(it => {
-          this.allAnamnesis = it.sort((a, b) => a.displayOrder - b.displayOrder);
+          this.allAnamnesis = it.sort((a, b) => {
+            let d = (+a.displayOrder) - (+b.displayOrder);
+            if (d === 0) {
+              d = a.name.localeCompare(b.name);
+            }
+            return d;
+          });
           this.resultAnam.length = it.length;
         })
       ).subscribe();
   }
-  
+
 
   ngOnInit( ): void {
- 
- 
+
+
   }
 
   public savePatient() {
@@ -46,7 +52,7 @@ public resultAnam: string[] = [];
   public saveAnam(): void {
     const toSave = this.resultAnam;
     console.log(toSave);
-    let res = toSave.map((it, index) => {
+    const res = toSave.map((it, index) => {
       const s = new AnamnesisPatient();
       s.idanamnesis = this.allAnamnesis[index].id;
       s.idpatient = this.patient.id;
@@ -58,7 +64,7 @@ public resultAnam: string[] = [];
     console.log(res.length);
     const obs = forkJoin(res).subscribe();
 
-    
+
 
   }
 
