@@ -18,7 +18,38 @@ namespace CovidDB.ModelsSqlServer
             this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
             this.Anamnesis.AddRange(
-                ModelsSqlServer.Anamnesis.Create("Istoric fumat", "Nr PA")
+                ModelsSqlServer.Anamnesis.Create(
+                    "Istoric fumat", "Nr PA", "medicatie personala",
+                    "Obezitate",
+"IMC",
+"HTA",
+"Diabet zaharat",
+"Link epidemiologic",
+"Contact COVID",
+"Cu cine a avut contact",
+"Expunere la noxe",
+"Ce expunere",
+"Alte APP",
+"Febra",
+"Temperatura",
+"Dispnee",
+"mMRC",
+"Tuse",
+"Anosmie",
+"Fatigabilitate",
+"Scaderea apetitului",
+"Cefalee",
+"Angina faringiana",
+"Frison",
+"Rinoree",
+"Greata",
+"Varsaturi",
+"Diaree",
+"Scaune diareice",
+"Name",
+"Debutul simptomelor"
+
+                   )
                 );
 
             this.CovidStatus.Add(new CovidStatus()
