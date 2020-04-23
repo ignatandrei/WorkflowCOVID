@@ -19,13 +19,33 @@ namespace CovidDB
 
         public async Task<Bed[]> FreeBeds()
         {
-            var Beds = await context.Bed.Include(it => it.IdroomNavigation).ToArrayAsync();
-            foreach(var b in Beds)
+            var beds = await context.Bed
+               .Include(it => it.IdroomNavigation).ToArrayAsync();
+            foreach (var b in beds)
             {
                 b.IdroomNavigation.Bed = null;
             }
             var occupied = await context.BedPatient.Select(it => it.Idbed).ToArrayAsync();
-            return Beds.Where(it => !occupied.Contains(it.Idbed)).ToArray();
+            return beds.Where(it => !occupied.Contains(it.Idbed)).ToArray();
+        }
+
+        public async Task<Bed[]> AllBedsWithPatients()
+        {
+            var Beds = await context.Bed
+                .Include(it => it.IdroomNavigation)              
+                .Include(it=> it.BedPatient)
+                .ThenInclude(bp=>bp.IdpatientNavigation)
+                .ToArrayAsync();
+            foreach (var b in Beds)
+            {
+                b.IdroomNavigation.Bed = null;
+                foreach( var bp in b.BedPatient)
+                {
+                    bp.IdbedNavigation = null;
+                    bp.IdpatientNavigation.BedPatient = null;                    
+                }
+            }
+            return Beds;
         }
     }
 }

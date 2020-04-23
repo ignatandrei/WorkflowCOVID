@@ -16,7 +16,7 @@ import { ReturnStatement } from '@angular/compiler';
 export class CovidNavigComponent  {
 
   constructor(private breakpointObserver: BreakpointObserver) {
-    
+
   }
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -25,6 +25,6 @@ export class CovidNavigComponent  {
       shareReplay()
     );
 
-  
+
 
 }

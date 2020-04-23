@@ -24,5 +24,11 @@ namespace CovidWorkflow.Controllers
             var bedRelated = new BedRelated(_context);
             return await bedRelated.FreeBeds();
         }
+        public async Task<Bed[]> AllBedsWithPatients()
+        {
+            var bedRelated = new BedRelated(_context);
+            return await bedRelated.AllBedsWithPatients();
+
+        }
     }
 }

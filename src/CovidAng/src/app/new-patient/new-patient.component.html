@@ -84,11 +84,24 @@ Pacient nou:
   </mat-form-field>
   <mat-form-field>
     <mat-label>Teste</mat-label>
-    <mat-select multiple  style="width:200px">
+    <mat-select multiple  style="width:200px"  [(ngModel)]="medicalTests" >
       
       <mat-option *ngFor="let it of MedicalTest"  [value]="it.id" >
         {{ it.name }}
       </mat-option>
+    </mat-select>
+
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Alege pat</mat-label>
+    <mat-select style="width:200px" >
+      <mat-option value="0">-- None --</mat-option>
+      <mat-optgroup *ngFor="let group of BR.keys()" [label]="BR.get(group)[0].idroomNavigation.name"
+                    [disabled]="false">
+        <mat-option *ngFor="let bed of BR.get(group)" [value]="bed.idbed" [disabled]="false">
+          {{bed.name}}
+        </mat-option>
+      </mat-optgroup>
     </mat-select>
   </mat-form-field>
   </mat-expansion-panel>

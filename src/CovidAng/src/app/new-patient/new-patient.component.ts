@@ -6,6 +6,9 @@ import { Anamnesis } from 'src/classes/Anamnesis';
 import { AnamnesisPatient } from 'src/classes/AnamnesisPatient';
 import { forkJoin } from 'rxjs';
 import { IdName } from 'src/classes/IdName';
+import { SearchBedService } from 'src/services/search-bed.service';
+import { BedWithRoom } from 'src/classes/BedWithRoom';
+import { Room } from 'src/classes/Room';
 
 @Component({
   selector: 'app-new-patient',
@@ -26,9 +29,9 @@ public resultAnam: string[] = [];
 public CovidStatus: IdName[];
 public Location: IdName[];
 public MedicalTest: IdName[];
+public BR: Map<number, BedWithRoom[]>;
 
-
-  constructor(private ws: WebapiService) {
+  constructor(private ws: WebapiService, private sb: SearchBedService ) {
     this.patient = new Patient();
     ws.GetAnamnesis()
       .pipe(
@@ -46,6 +49,20 @@ public MedicalTest: IdName[];
     ws.GetStatus().subscribe(it => this.CovidStatus = it);
     ws.GetLocation().subscribe(it => this.Location = it);
     ws.GetMedicalTest().subscribe(it => this.MedicalTest = it.sort((a, b) => a.name.localeCompare(b.name)));
+    sb.FreeBeds()
+    .pipe(tap(it => {
+      this.BR = new Map<number, BedWithRoom[]>();
+
+      for (const br of it) {
+           if (!this.BR.has(br.idroom)) {
+             this.BR.set(br.idroom, []);
+           }
+           this.BR.get(br.idroom).push(br);
+
+      }
+
+    }))
+    .subscribe();
   }
 
 
