@@ -7,6 +7,8 @@ import { WebapiService } from 'src/services/webapi.service';
 import { Anamnesis } from 'src/classes/Anamnesis';
 import { AnamnesisPatient } from 'src/classes/AnamnesisPatient';
 import { ReturnStatement } from '@angular/compiler';
+import { ErrorService } from '../general/error.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-covid-navig',
@@ -15,7 +17,15 @@ import { ReturnStatement } from '@angular/compiler';
 })
 export class CovidNavigComponent  {
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver, private err: ErrorService , private _snackBar: MatSnackBar) {
+    this.err.NextError().pipe(
+      tap(it => {
+        this._snackBar.open(it, 'ERROR', {
+          duration: 5000,
+        });
+      }),
+      shareReplay()
+    ).subscribe();
 
   }
 
@@ -24,6 +34,8 @@ export class CovidNavigComponent  {
       map(result => result.matches),
       shareReplay()
     );
+
+    
 
 
 
