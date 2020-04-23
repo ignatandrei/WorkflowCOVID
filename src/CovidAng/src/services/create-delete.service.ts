@@ -3,6 +3,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { AnamnesisPatient } from 'src/classes/AnamnesisPatient';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { PatientStatus } from 'src/classes/PatientStatus';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class CreateDeleteService {
   public CreateAnamnesis(idpatient:number, ap: AnamnesisPatient[]): Observable<number> {
     const url = environment.url + 'api/DeleteCreate/Anamnesis/'+idpatient;
     return this.http.post<number>(url, ap, this.httpOptionsText);
+  }
+  public CreateStatus(ps:PatientStatus): Observable<number> {
+    const url = environment.url + 'api/DeleteCreate/CovidStatus/';
+    return this.http.post<number>(url, ps, this.httpOptionsText);
   }
 
 }

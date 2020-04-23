@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CovidDB.ModelsSqlServer
 {
-    public partial class PatientStatus
+    public partial class PatientStatus:IPatient
     {
         [Key]
         [Column("IDPatient")]

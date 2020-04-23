@@ -16,14 +16,25 @@ namespace CovidDB
         {
             this.context = context;
         }
+        public async Task<int> Location(LocationPatient item)
+        {
+            return await context.DeleteDataPatient(context.LocationPatient, item);
+        }
+        public async Task<int> Status(PatientStatus item)
+        {
+            return await context.DeleteDataPatient(context.PatientStatus, item);
+            //var st = await context.PatientStatus.FirstOrDefaultAsync(it => it.Idpatient == ps.Idpatient);
+            //if(st != null)
+            //{
+            //    context.PatientStatus.Remove(st);
+            //    await context.SaveChangesAsync();
+            //}
+            //context.PatientStatus.Add(ps);
+            //return await context.SaveChangesAsync();
+
+        }
         public async Task<int> AnamnesisForPatient(int idPatient ,AnamnesisPatient[] anamneses)
         {
-            bool existModif = false;
-            var lst = new List<AnamnesisPatient>(anamneses);
-            foreach(var item in lst)
-            {
-                item.Idpatient = idPatient;
-            }
             var anamPatient =await context
                 .AnamnesisPatient
                 .Where(it => it.Idpatient == idPatient)
@@ -31,27 +42,20 @@ namespace CovidDB
             
             foreach (var item in anamPatient)
             {
-                existModif = true;
-                var exists = lst.FirstOrDefault(it => it.Idanamnesis == item.Idanamnesis);
-                if (exists == null)
-                {
-                    context.AnamnesisPatient.Remove(item);
-                }
-                else
-                {
-                    lst.Remove(item);
-
-                }
+                context.AnamnesisPatient.Remove(item);
+            }
+            await context.SaveChangesAsync();
+            var lst = new List<AnamnesisPatient>(anamneses);
+            foreach (var item in lst)
+            {
+                item.Idpatient = idPatient;
             }
             if (lst.Count > 0)
             {
-                existModif = true;
                 context.AnamnesisPatient.AddRange(lst.ToArray());
-            }
-            if (existModif)
                 return await context.SaveChangesAsync();
-            else
-                return 0;
+            }
+            return 0;
         }
     }
 }

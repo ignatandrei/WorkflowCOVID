@@ -71,7 +71,7 @@ Pacient nou:
       <mat-label>Decizie pacient</mat-label>
       <select matNativeControl [(ngModel)]="covidStatus" >
         <option value="0" disabled selected></option>
-        <option *ngFor="let it of CovidStatus">
+        <option *ngFor="let it of CovidStatus" [value]="it.id" >
           {{ it.name }}
         </option>
       </select>

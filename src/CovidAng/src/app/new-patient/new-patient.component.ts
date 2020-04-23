@@ -10,6 +10,7 @@ import { SearchBedService } from 'src/services/search-bed.service';
 import { BedWithRoom } from 'src/classes/BedWithRoom';
 import { Room } from 'src/classes/Room';
 import { CreateDeleteService } from 'src/services/create-delete.service';
+import { PatientStatus } from 'src/classes/PatientStatus';
 
 @Component({
   selector: 'app-new-patient',
@@ -90,14 +91,16 @@ public BR: Map<number, BedWithRoom[]>;
   public saveAnam(): void {
     const toSave = this.resultAnam
       .filter(it => it.details?.trim().length > 0);
-    this.cd.CreateAnamnesis(this.patient.id, toSave).subscribe(
-      it => window.alert(it)
-    );
+    this.cd.CreateAnamnesis(this.patient.id, toSave).subscribe();
 
 
   }
   public saveStatus() {
-
+    let ps = new PatientStatus();
+    ps.idpatient= this.patient.id;
+    ps.idstatus = +this.covidStatus;
+    console.log(ps);
+    this.cd.CreateStatus(ps).subscribe();
   }
 
 }

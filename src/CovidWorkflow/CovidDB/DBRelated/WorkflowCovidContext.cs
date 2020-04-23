@@ -13,7 +13,18 @@ namespace CovidDB.ModelsSqlServer
     /// <seealso cref="Microsoft.EntityFrameworkCore.DbContext" />
     public partial class WorkflowCovidContext
     {
-       
+        public async Task<int> DeleteDataPatient<T>(DbSet<T> p, T pat)
+            where T: class,IPatient
+        {
+            var exist = await p.FirstOrDefaultAsync(it => it.Idpatient == pat.Idpatient);
+            if(exist !=null)
+            {
+                p.Remove(exist);
+                await this.SaveChangesAsync();
+            }
+            p.Add(pat);
+            return await this.SaveChangesAsync();
+        }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder)
         {
@@ -35,7 +46,7 @@ namespace CovidDB.ModelsSqlServer
             var result = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
             if( OnAfterSaveChanges(auditEntries))
                 await base.SaveChangesAsync();
-            return result;
+            return result/2;
 
         }
         private List<AuditEntry> OnBeforeSaveChanges()
