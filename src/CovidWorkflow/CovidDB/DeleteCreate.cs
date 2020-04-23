@@ -16,6 +16,10 @@ namespace CovidDB
         {
             this.context = context;
         }
+        public async Task<int> Bed(BedPatient item)
+        {
+            return await context.DeleteDataPatient(context.BedPatient, item);
+        }
         public async Task<int> Location(LocationPatient item)
         {
             return await context.DeleteDataPatient(context.LocationPatient, item);

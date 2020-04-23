@@ -1,5 +1,5 @@
 Pacient nou:
-<mat-accordion>
+<mat-accordion multi="true">
   <mat-expansion-panel [expanded]="!patientSaved()">
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -58,7 +58,7 @@ Pacient nou:
       </button>
     </div>
   </mat-expansion-panel>
-  <mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel [disabled]="!patientSaved()" [expanded]="patientSaved()">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Decizie
@@ -80,7 +80,7 @@ Pacient nou:
     <mat-label>Internare</mat-label>
     <select matNativeControl  [(ngModel)]="location">
       <option value="0" disabled selected></option>
-      <option *ngFor="let it of Location">
+      <option *ngFor="let it of Location" [value]="it.id">
         {{ it.name }}
       </option>
     </select>
@@ -97,7 +97,7 @@ Pacient nou:
   </mat-form-field>
   <mat-form-field>
     <mat-label>Alege pat</mat-label>
-    <mat-select style="width:200px" >
+    <mat-select style="width:200px" [(ngModel)]="idBed">
       <mat-option value="0">-- None --</mat-option>
       <mat-optgroup *ngFor="let group of BR | keyvalue " [label]="group.value[0].idroomNavigation.name"
                     [disabled]="false">

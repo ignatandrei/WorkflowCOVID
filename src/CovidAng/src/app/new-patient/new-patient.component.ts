@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WebapiService } from 'src/services/webapi.service';
 import { Patient } from 'src/classes/Patient';
-import { tap } from 'rxjs/operators';
+import { tap, last } from 'rxjs/operators';
 import { Anamnesis } from 'src/classes/Anamnesis';
 import { AnamnesisPatient } from 'src/classes/AnamnesisPatient';
 import { forkJoin } from 'rxjs';
@@ -11,6 +11,8 @@ import { BedWithRoom } from 'src/classes/BedWithRoom';
 import { Room } from 'src/classes/Room';
 import { CreateDeleteService } from 'src/services/create-delete.service';
 import { PatientStatus } from 'src/classes/PatientStatus';
+import { LocationPatient } from 'src/classes/LocationPatient';
+import { BedPatient } from 'src/classes/BedPatient';
 
 @Component({
   selector: 'app-new-patient',
@@ -32,6 +34,7 @@ public CovidStatus: IdName[];
 public Location: IdName[];
 public MedicalTest: IdName[];
 public BR: Map<number, BedWithRoom[]>;
+public idBed: number;
 
   constructor(private ws: WebapiService, private sb: SearchBedService, private cd: CreateDeleteService ) {
     this.patient = new Patient();
@@ -96,11 +99,24 @@ public BR: Map<number, BedWithRoom[]>;
 
   }
   public saveStatus() {
-    let ps = new PatientStatus();
-    ps.idpatient= this.patient.id;
+    const ps = new PatientStatus();
+    ps.idpatient = this.patient.id;
     ps.idstatus = +this.covidStatus;
     console.log(ps);
     this.cd.CreateStatus(ps).subscribe();
+
+    const ls = new LocationPatient();
+    ls.idpatient = this.patient.id;
+    ls.idlocation = +this.location;
+    this.cd.CreateLocation(ls).subscribe();
+
+    const bp = new BedPatient();
+    bp.idpatient = this.patient.id;
+    bp.idbed = +this.idBed;
+    this.cd.CreateBed(bp).subscribe();
+
+
+
   }
 
 }

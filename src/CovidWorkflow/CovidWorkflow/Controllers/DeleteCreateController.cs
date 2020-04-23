@@ -24,22 +24,24 @@ namespace CovidWorkflow.Controllers
         {
             var ds = new DeleteCreate(_context);
             return await ds.AnamnesisForPatient(id, anamnesis);
-
-
         }
         [HttpPost()]
         public async Task<int> Location(LocationPatient item)
         {
             var ds = new DeleteCreate(_context);
             return await ds.Location(item);
-
-
         }
         [HttpPost()]
         public async Task<int> CovidStatus(PatientStatus item)
         {
             var ds = new DeleteCreate(_context);
             return await ds.Status(item);
+        }
+        [HttpPost()]
+        public async Task<int> Bed(BedPatient item)
+        {
+            var ds = new DeleteCreate(_context);
+            return await ds.Bed(item);
         }
     }
 }
