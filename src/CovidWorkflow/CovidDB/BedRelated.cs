@@ -35,7 +35,7 @@ namespace CovidDB
             var Beds = await context.Bed
                 .Include(it => it.IdroomNavigation)              
                 .Include(it=> it.BedPatient)
-                .ThenInclude(bp=>bp.IdpatientNavigation)
+                //.ThenInclude(bp=>bp.IdpatientNavigation)
                 .ToArrayAsync();
             foreach (var b in Beds)
             {
@@ -43,7 +43,7 @@ namespace CovidDB
                 foreach( var bp in b.BedPatient)
                 {
                     bp.IdbedNavigation = null;
-                    bp.IdpatientNavigation.BedPatient = null;                    
+                    //bp.IdpatientNavigation.BedPatient = null;                    
                 }
             }
             return Beds;

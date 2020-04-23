@@ -1,1 +1,24 @@
-<p>bed-situation works!</p>
+<p>Number rooms: {{roomsId.size}}</p>
+<mat-accordion multi="true">
+    <mat-expansion-panel *ngFor="let g of roomsId| keyvalue"> 
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+            Room :{{g.value[0].idroomNavigation.name }}
+            </mat-panel-title>
+            <mat-panel-description>
+              Number beds:  {{g.value.length }}
+            
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <table>
+              <tr>
+                  <td>Nr</td><td>Nume</td><td>Pacient</td>
+              </tr>
+              <tr *ngFor="let b of g.value; let i=index">
+                <td>{{i+1}}</td><td>{{b.name}}</td><td>{{ b.bedPatient | json}}</td>
+            </tr>
+          </table>      
+    </mat-expansion-panel>
+
+
+</mat-accordion>
