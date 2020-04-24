@@ -29,7 +29,6 @@ namespace CovidWorkflow
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //Scaffold-DbContext 'Data Source=.;Initial Catalog=WorkflowCovid;UID=sa;PWD=<YourStrong@Passw0rd>' Microsoft.EntityFrameworkCore.SqlServer -OutputDir ModelsSqlServer            
             services
                 .AddDbContext<WorkflowCovidContext>(opt=>
                 //opt.UseInMemoryDatabase("Test")
