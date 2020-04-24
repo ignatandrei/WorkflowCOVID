@@ -16,4 +16,9 @@
     {
 
     }
+    public partial class DetailsPatient : IPatient
+    {
+
+    }
+
 }

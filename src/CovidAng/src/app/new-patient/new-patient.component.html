@@ -5,9 +5,7 @@ Pacient nou:
       <mat-panel-title>
         Personal data
       </mat-panel-title>
-      <mat-panel-description>
-        Nume {{ patient.name }} , Telefon {{ patient.phone }}
-      </mat-panel-description>
+      <mat-panel-description> Nume {{ patient.name }} </mat-panel-description>
     </mat-expansion-panel-header>
 
     <mat-form-field>
@@ -15,10 +13,16 @@ Pacient nou:
       <input matInput placeholder="nume pacient" [(ngModel)]="patient.name" />
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Telefon</mat-label>
-      <input matInput placeholder="telefon" [(ngModel)]="patient.phone" />
-    </mat-form-field>
+    <ng-template ngFor let-i="index" let-idval [ngForOf]="PatientDetails">
+      <mat-form-field>
+        <mat-label>{{ idval.name }}</mat-label>
+        <input
+          matInput
+          placeholder="idval.name"
+          [(ngModel)]="DetailsPatientData[i].value"
+        />
+      </mat-form-field>
+    </ng-template>
 
     <mat-form-field>
       <mat-label>Comentarii</mat-label>
@@ -29,11 +33,21 @@ Pacient nou:
       ></textarea>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" (click)="savePatient()" *ngIf="patient.id == 0">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="savePatient()"
+      *ngIf="patient.id == 0"
+    >
       Introdu pacient
     </button>
-    <button mat-raised-button color="primary" (click)="savePatient()" *ngIf="patient.id>0" > 
-      Salveaza date pentru {{patient.name}}
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="savePatient()"
+      *ngIf="patient.id > 0"
+    >
+      Salveaza date pentru {{ patient.name }}
     </button>
   </mat-expansion-panel>
   <mat-expansion-panel [disabled]="!patientSaved()" [expanded]="patientSaved()">
@@ -49,7 +63,11 @@ Pacient nou:
     <ng-template ngFor let-i="index" let-anam [ngForOf]="allAnamnesis">
       <mat-form-field>
         <mat-label>{{ anam.name }}</mat-label>
-        <input matInput placeholder="anam.name" [(ngModel)]="resultAnam[i].details" />
+        <input
+          matInput
+          placeholder="anam.name"
+          [(ngModel)]="resultAnam[i].details"
+        />
       </mat-form-field>
     </ng-template>
     <div>
@@ -69,46 +87,51 @@ Pacient nou:
     </mat-expansion-panel-header>
     <mat-form-field>
       <mat-label>Decizie pacient</mat-label>
-      <select matNativeControl [(ngModel)]="covidStatus" >
+      <select matNativeControl [(ngModel)]="covidStatus">
         <option value="0" disabled selected></option>
-        <option *ngFor="let it of CovidStatus" [value]="it.id" >
+        <option *ngFor="let it of CovidStatus" [value]="it.id">
           {{ it.name }}
         </option>
       </select>
     </mat-form-field>
     <mat-form-field>
-    <mat-label>Internare</mat-label>
-    <select matNativeControl  [(ngModel)]="location">
-      <option value="0" disabled selected></option>
-      <option *ngFor="let it of Location" [value]="it.id">
-        {{ it.name }}
-      </option>
-    </select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Teste</mat-label>
-    <mat-select multiple  style="width:200px"  [(ngModel)]="medicalTests" >
-      
-      <mat-option *ngFor="let it of MedicalTest"  [value]="it.id" >
-        {{ it.name }}
-      </mat-option>
-    </mat-select>
-
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Alege pat</mat-label>
-    <mat-select style="width:200px" [(ngModel)]="idBed">
-      <mat-option value="0">-- None --</mat-option>
-      <mat-optgroup *ngFor="let group of BR | keyvalue " [label]="group.value[0].idroomNavigation.name"
-                    [disabled]="false">
-        <mat-option *ngFor="let bed of group.value" [value]="bed.idbed" [disabled]="false">
-          {{bed.name}}
+      <mat-label>Internare</mat-label>
+      <select matNativeControl [(ngModel)]="location">
+        <option value="0" disabled selected></option>
+        <option *ngFor="let it of Location" [value]="it.id">
+          {{ it.name }}
+        </option>
+      </select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Teste</mat-label>
+      <mat-select multiple style="width: 200px;" [(ngModel)]="medicalTests">
+        <mat-option *ngFor="let it of MedicalTest" [value]="it.id">
+          {{ it.name }}
         </mat-option>
-      </mat-optgroup>
-    </mat-select>
-  </mat-form-field>
-  <button mat-raised-button color="primary" (click)="saveStatus()">
-    Salveaza 
-  </button>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Alege pat</mat-label>
+      <mat-select style="width: 200px;" [(ngModel)]="idBed">
+        <mat-option value="0">-- None --</mat-option>
+        <mat-optgroup
+          *ngFor="let group of BR | keyvalue"
+          [label]="group.value[0].idroomNavigation.name"
+          [disabled]="false"
+        >
+          <mat-option
+            *ngFor="let bed of group.value"
+            [value]="bed.idbed"
+            [disabled]="false"
+          >
+            {{ bed.name }}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="saveStatus()">
+      Salveaza
+    </button>
   </mat-expansion-panel>
 </mat-accordion>

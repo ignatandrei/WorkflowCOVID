@@ -46,4 +46,8 @@ export class WebapiService {
     const url = environment.url + 'api/MedicalTests/';
     return this.http.get<IdName[]>(url, this.httpOptions);
   }
+  public GetNamePatientDetails(): Observable<IdName[]> {
+    const url = environment.url + 'api/NamePatientDetails/';
+    return this.http.get<IdName[]>(url, this.httpOptions);
+  }
 }

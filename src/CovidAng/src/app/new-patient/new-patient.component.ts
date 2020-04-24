@@ -14,6 +14,7 @@ import { PatientStatus } from 'src/classes/PatientStatus';
 import { LocationPatient } from 'src/classes/LocationPatient';
 import { BedPatient } from 'src/classes/BedPatient';
 import { Router } from '@angular/router';
+import { DetailsPatient } from 'src/classes/DetailsPatient';
 
 @Component({
   selector: 'app-new-patient',
@@ -27,7 +28,7 @@ public patient: Patient;
 public covidStatus = 0;
 public location = 0;
 public medicalTests: number[];
-
+public DetailsPatientData: DetailsPatient[];
 
 public allAnamnesis: Anamnesis[] = [];
 public resultAnam: AnamnesisPatient[] = [];
@@ -35,6 +36,8 @@ public CovidStatus: IdName[];
 public Location: IdName[];
 public MedicalTest: IdName[];
 public BR: Map<number, BedWithRoom[]>;
+public PatientDetails: IdName[];
+
 public idBed: number;
 
   constructor(private ws: WebapiService, 
@@ -60,6 +63,17 @@ public idBed: number;
         );
         }
       )).subscribe();
+    ws.GetNamePatientDetails().subscribe(it=>
+      {
+        this.DetailsPatientData = [];
+        for (const iterator of it) {
+          const dt= new DetailsPatient();
+          dt.idnameDetail = iterator.id;
+          this.DetailsPatientData.push(dt);
+        }
+        this.PatientDetails = it;
+
+      });
     ws.GetStatus().subscribe(it => this.CovidStatus = it);
     ws.GetLocation().subscribe(it => this.Location = it);
     ws.GetMedicalTest().subscribe(it => this.MedicalTest = it.sort((a, b) => a.name.localeCompare(b.name)));

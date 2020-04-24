@@ -9,8 +9,14 @@ namespace CovidDB.ModelsSqlServer
     {
         public void CreateDB()
         {
+            
             this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
+            this.NamePatientDetails.AddRange(
+                ModelsSqlServer.NamePatientDetails.Create(
+                    "CNP", "Telefon", "Sustinator", "TelefonSustinator","Comments"
+                    ))
+                ;
             this.Anamnesis.AddRange(
                 ModelsSqlServer.Anamnesis.Create(
                     "Istoric fumat", "Nr PA", "medicatie personala",
