@@ -15,7 +15,7 @@ namespace CovidDB
         {
             this.context = context;
         }
-        private async Task<Patient> FindDetails(long id)
+        public async Task<Patient> FindDetails(long id)
         {
             var p = await this.context.Patient
                 .Include(it => it.AnamnesisPatient)

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Patient } from 'src/classes/Patient';
+import { Patient, PatientDetails } from 'src/classes/Patient';
 import { environment } from 'src/environments/environment';
 import { Anamnesis } from 'src/classes/Anamnesis';
 import { AnamnesisPatient } from 'src/classes/AnamnesisPatient';
@@ -26,9 +26,9 @@ export class WebapiService {
     }
     return this.http.post<Patient>(url, p, this.httpOptions);
   }
-  public GetPatient(id: number): Observable<Patient> {
-    const url = environment.url + 'api/Patients/' + id;
-    return this.http.get<Patient>(url, this.httpOptions);
+  public GetPatient(id: number): Observable<PatientDetails> {
+    const url = environment.url + 'api/PatientRelated/GetDetails/' + id;
+    return this.http.get<PatientDetails>(url, this.httpOptions);
   }
   public GetAnamnesis(): Observable<Anamnesis[]> {
     const url = environment.url + 'api/Anamnesis/';
