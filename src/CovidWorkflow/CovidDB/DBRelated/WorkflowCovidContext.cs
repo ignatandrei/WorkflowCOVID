@@ -16,10 +16,13 @@ namespace CovidDB.ModelsSqlServer
         public async Task<int> DeleteDataPatient<T>(DbSet<T> p, T pat)
             where T: class,IPatient
         {
-            var exist = await p.FirstOrDefaultAsync(it => it.Idpatient == pat.Idpatient);
-            if(exist !=null)
+            var exist = await p.Where(it => it.Idpatient == pat.Idpatient).ToArrayAsync();
+            if(exist.Length>0)
             {
-                p.Remove(exist);
+                foreach(var item in exist)
+                {
+                    p.Remove(item);
+                }
                 await this.SaveChangesAsync();
             }
             p.Add(pat);
