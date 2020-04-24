@@ -32,8 +32,8 @@ namespace CovidWorkflow
             services
                 .AddDbContext<WorkflowCovidContext>(opt=>
                 //opt.UseInMemoryDatabase("Test")
-                //opt.UseSqlite("Data Source=sqlitedemo.db")
-                opt.UseSqlServer("Data Source=.;Initial Catalog=WorkflowCovid1;UID=sa;PWD=<YourStrong@Passw0rd>")
+                opt.UseSqlite("Data Source=sqlitedemo.db")
+               // opt.UseSqlServer("Data Source=.;Initial Catalog=WorkflowCovid1;UID=sa;PWD=<YourStrong@Passw0rd>")
          
                 );
 
