@@ -7,4 +7,5 @@ export class PatientStatus {
 
 export class PatientStatusWithName extends PatientStatus{
   public idstatusNavigation: IdName;
+  public dateModification: Date;
 }

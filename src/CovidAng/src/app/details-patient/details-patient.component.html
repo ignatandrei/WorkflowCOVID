@@ -1,5 +1,30 @@
-Pacient : {{pat.id}}
 <mat-card>
-    <mat-card-header>Nume: {{pat.name}}  </mat-card-header>
-    <mat-card-content>{{pat.name}}</mat-card-content>
+  <mat-card-header>Pacient: {{ pat.name }} ,CNP: {{cnp}} ,Pat: {{ bed }} Status: {{pat.patientStatus[0].idstatusNavigation.name}} la {{pat.patientStatus[0].dateModification }} </mat-card-header>
+  <mat-card-content>
+    <mat-tab-group>
+      <mat-tab label="Detalii">
+        <div *ngFor="let dp of pat.detailsPatient">
+          {{ dp.idnameDetailNavigation.name }} : {{dp.value}}
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Anamneza"> 
+        <div *ngFor="let dp of pat.anamnesisPatient">
+            {{ dp.idanamnesisNavigation.name }} : {{dp.details}} at {{dp.date}}
+          </div>
+      </mat-tab>
+      <mat-tab label="Decizii"> 
+        <div *ngFor="let dp of pat.locationPatient">
+           Locatie: {{ dp.idlocationNavigation.name }} 
+          </div>
+          <div *ngFor="let dp of pat.bedPatient">
+           Pat: {{ dp.idbedNavigation.name }} 
+          </div>
+          <div *ngFor="let dp of pat.patientStatus">
+            Status : {{ dp.idstatusNavigation.name }} 
+          </div>
+
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
 </mat-card>
