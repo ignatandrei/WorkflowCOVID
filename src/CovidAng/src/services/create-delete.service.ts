@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { PatientStatus } from 'src/classes/PatientStatus';
 import { LocationPatient } from 'src/classes/LocationPatient';
 import { BedPatient } from 'src/classes/BedPatient';
+import { DetailsPatient } from 'src/classes/DetailsPatient';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,10 @@ export class CreateDeleteService {
   public CreateAnamnesis(idpatient: number, ap: AnamnesisPatient[]): Observable<number> {
     const url = environment.url + 'api/DeleteCreate/Anamnesis/' + idpatient;
     return this.http.post<number>(url, ap, this.httpOptionsText);
+  }
+  public CreateDetailsPatient(idpatient: number, items: DetailsPatient[]): Observable<number> {
+    const url = environment.url + 'api/DeleteCreate/DetailsPatient/' + idpatient;
+    return this.http.post<number>(url, items, this.httpOptionsText);
   }
   public CreateStatus(item: PatientStatus): Observable<number> {
     const url = environment.url + 'api/DeleteCreate/CovidStatus/';

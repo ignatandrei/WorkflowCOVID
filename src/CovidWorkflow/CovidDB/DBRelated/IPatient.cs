@@ -20,5 +20,8 @@
     {
 
     }
+    partial class AnamnesisPatient : IPatient
+    {
 
+    }
 }

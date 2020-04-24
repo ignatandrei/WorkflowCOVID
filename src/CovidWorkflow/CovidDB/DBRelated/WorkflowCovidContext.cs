@@ -13,10 +13,13 @@ namespace CovidDB.ModelsSqlServer
     /// <seealso cref="Microsoft.EntityFrameworkCore.DbContext" />
     public partial class WorkflowCovidContext
     {
-        public async Task<int> DeleteDataPatient<T>(DbSet<T> p, T pat)
+        public async Task<int> DeleteDataPatient<T>(DbSet<T> p,params T[] data)
             where T: class,IPatient
         {
-            var exist = await p.Where(it => it.Idpatient == pat.Idpatient).ToArrayAsync();
+            if (data?.Length < 1)
+                return 0;
+            var id = data[0].Idpatient;
+            var exist = await p.Where(it => it.Idpatient == id).ToArrayAsync();
             if(exist.Length>0)
             {
                 foreach(var item in exist)
@@ -25,7 +28,7 @@ namespace CovidDB.ModelsSqlServer
                 }
                 await this.SaveChangesAsync();
             }
-            p.Add(pat);
+            p.AddRange(data);
             return await this.SaveChangesAsync();
         }
 

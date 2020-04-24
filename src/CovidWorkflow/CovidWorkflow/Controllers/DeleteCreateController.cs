@@ -25,6 +25,12 @@ namespace CovidWorkflow.Controllers
             var ds = new DeleteCreate(_context);
             return await ds.AnamnesisForPatient(id, anamnesis);
         }
+        [HttpPost("{id}")]
+        public async Task<int> DetailsPatient(int id, DetailsPatient[] items)
+        {
+            var ds = new DeleteCreate(_context);
+            return await ds.DetailsPatient(id, items);
+        }
         [HttpPost()]
         public async Task<int> Location(LocationPatient item)
         {

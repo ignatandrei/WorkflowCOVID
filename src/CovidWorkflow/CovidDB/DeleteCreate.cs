@@ -37,29 +37,27 @@ namespace CovidDB
             //return await context.SaveChangesAsync();
 
         }
-        public async Task<int> AnamnesisForPatient(int idPatient ,AnamnesisPatient[] anamneses)
+        public async Task<int> AnamnesisForPatient(int idPatient, AnamnesisPatient[] items)
         {
-            var anamPatient =await context
-                .AnamnesisPatient
-                .Where(it => it.Idpatient == idPatient)
-                .ToArrayAsync();
-            
-            foreach (var item in anamPatient)
-            {
-                context.AnamnesisPatient.Remove(item);
-            }
-            await context.SaveChangesAsync();
-            var lst = new List<AnamnesisPatient>(anamneses);
-            foreach (var item in lst)
+            if (items?.Length < 1)
+                return 0;
+            foreach (var item in items)
             {
                 item.Idpatient = idPatient;
             }
-            if (lst.Count > 0)
+            return await context.DeleteDataPatient(context.AnamnesisPatient, items);
+        }
+        public async Task<int> DetailsPatient(int idPatient, DetailsPatient[] items)
+        {
+            if (items?.Length < 1)
+                return 0;
+            foreach (var item in items)
             {
-                context.AnamnesisPatient.AddRange(lst.ToArray());
-                return await context.SaveChangesAsync();
+                item.Idpatient = idPatient;
             }
-            return 0;
+            return await context.DeleteDataPatient(context.DetailsPatient, items);
+
+
         }
     }
 }

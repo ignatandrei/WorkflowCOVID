@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WebapiService } from 'src/services/webapi.service';
 import { Patient } from 'src/classes/Patient';
-import { tap, last } from 'rxjs/operators';
+import { tap, last, map } from 'rxjs/operators';
 import { Anamnesis } from 'src/classes/Anamnesis';
 import { AnamnesisPatient } from 'src/classes/AnamnesisPatient';
 import { forkJoin } from 'rxjs';
@@ -40,10 +40,10 @@ public PatientDetails: IdName[];
 
 public idBed: number;
 
-  constructor(private ws: WebapiService, 
-    private sb: SearchBedService, 
-    private cd: CreateDeleteService ,
-    private router: Router) {
+  constructor(private ws: WebapiService,
+              private sb: SearchBedService,
+              private cd: CreateDeleteService ,
+              private router: Router) {
     this.patient = new Patient();
     ws.GetAnamnesis()
       .pipe(
@@ -63,11 +63,10 @@ public idBed: number;
         );
         }
       )).subscribe();
-    ws.GetNamePatientDetails().subscribe(it=>
-      {
+    ws.GetNamePatientDetails().subscribe(it => {
         this.DetailsPatientData = [];
         for (const iterator of it) {
-          const dt= new DetailsPatient();
+          const dt = new DetailsPatient();
           dt.idnameDetail = iterator.id;
           this.DetailsPatientData.push(dt);
         }
@@ -101,9 +100,17 @@ public idBed: number;
 
   public savePatient() {
 
-    this.ws.CreatePatientOrSave(this.patient).subscribe(
-      it => this.patient =  new Patient(it)
-    );
+    this.ws.CreatePatientOrSave(this.patient)
+    .pipe(
+      tap(it => this.patient =  new Patient(it)),
+      map(it => {
+        const toSave = this.DetailsPatientData.filter(dp => dp.value?.length > 0);
+        return this.cd.CreateDetailsPatient(it.id, toSave).subscribe();
+      } )
+    )
+    .subscribe();
+
+
   }
 
   public patientSaved(): boolean {
@@ -133,7 +140,7 @@ public idBed: number;
     bp.idbed = +this.idBed;
     this.cd.CreateBed(bp).subscribe();
 
-    this.router.navigateByUrl('/patient/'+this.patient.id );
+    this.router.navigateByUrl('/patient/' + this.patient.id );
 
   }
 
