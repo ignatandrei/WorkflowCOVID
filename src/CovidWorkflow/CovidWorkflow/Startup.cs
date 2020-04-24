@@ -31,8 +31,13 @@ namespace CovidWorkflow
             services.AddControllers();
             //Scaffold-DbContext 'Data Source=.;Initial Catalog=WorkflowCovid;UID=sa;PWD=<YourStrong@Passw0rd>' Microsoft.EntityFrameworkCore.SqlServer -OutputDir ModelsSqlServer            
             services
-                .AddDbContext<WorkflowCovidContext>(opt=> 
-                opt.UseInMemoryDatabase("Test"));
+                .AddDbContext<WorkflowCovidContext>(opt=>
+                //opt.UseInMemoryDatabase("Test")
+                //opt.UseSqlite("Data Source=sqlitedemo.db")
+                opt.UseSqlServer("Data Source=.;Initial Catalog=WorkflowCovid1;UID=sa;PWD=<YourStrong@Passw0rd>")
+         
+                );
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "wwwroot";

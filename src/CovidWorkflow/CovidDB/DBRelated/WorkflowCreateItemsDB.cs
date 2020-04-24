@@ -1,6 +1,7 @@
 ﻿using CovidDB.DBRelated;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CovidDB.ModelsSqlServer
@@ -10,13 +11,17 @@ namespace CovidDB.ModelsSqlServer
         public void CreateDB()
         {
             
-            this.Database.EnsureDeleted();
+            //this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
+            if (this.NamePatientDetails.ToArray().Length > 0)
+                return;
+
             this.NamePatientDetails.AddRange(
                 ModelsSqlServer.NamePatientDetails.Create(
-                    "CNP", "Telefon", "Sustinator", "TelefonSustinator","Comments"
+                    "CNP", "Telefon", "Sustinator", "TelefonSustinator"
                     ))
                 ;
+            this.SaveChanges(); 
             this.Anamnesis.AddRange(
                 ModelsSqlServer.Anamnesis.Create(
                     "Istoric fumat", "Nr PA", "medicatie personala",
@@ -51,7 +56,7 @@ namespace CovidDB.ModelsSqlServer
 
                    )
                 );
-
+            this.SaveChanges();
             this.CovidStatus.Add(new CovidStatus()
             {
                 Name = "Suspect",
@@ -60,9 +65,9 @@ namespace CovidDB.ModelsSqlServer
             {
                 Name = "Confirmat",
             });
-
+            this.SaveChanges();
             this.Location.AddRange(ModelsSqlServer.Location.Create("SpitalizareZi", "Spitalizare", "Acasa", "Iesit Evidenta"));
-
+            this.SaveChanges();
             this.MedicalTests.AddRange(ModelsSqlServer.MedicalTests.Create(
                 "PCR SARS COV 2",
 "HLG",
@@ -93,7 +98,7 @@ namespace CovidDB.ModelsSqlServer
 "CT Torace K"
 
                 ));
-
+            this.SaveChanges();
             this.Room.AddRange(BedsRoom.CreateRoom("1A",
 "2A",
 "3A",
@@ -115,6 +120,7 @@ namespace CovidDB.ModelsSqlServer
 "14B",
 "15B"
 ));
+            this.SaveChanges();
             this.Bed.AddRange(BedsRoom.CreateBed(
                 (1, "Pat1"),
 (1, "Pat2"),

@@ -17,17 +17,23 @@ namespace CovidDB
             this.context = context;
         }
 
-        public Task<Patient[]> SearchPatient(string criteria)
+        public async Task<Patient[]> SearchPatient(string criteria)
         {
             if (criteria?.Trim()?.Length < 1)
                 throw new ArgumentNullException(nameof(criteria));
 
             criteria = criteria.Trim();
-            return context.Patient.Where(it =>
-                    it.Name.Contains(criteria)
-                    ||
-                    it.Phone.Contains(criteria)
+            var det = await context
+                .DetailsPatient
+                .Where(it => it.Value.Contains(criteria))
+                .Select(it => it.Idpatient)
+                .Distinct()
+                .ToArrayAsync();
+            var p1= await context.Patient.Where(it =>
+                    it.Name.Contains(criteria)                    
                     ).ToArrayAsync();
+            var p2 = await context.Patient.Where(it => det.Contains(it.Id)).ToArrayAsync();
+            return p1.Union(p2).Distinct().ToArray();
         }
     }
 }

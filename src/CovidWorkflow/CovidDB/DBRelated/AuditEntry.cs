@@ -8,9 +8,12 @@ namespace CovidDB.ModelsSqlServer
 {
     public class AuditEntry
     {
-        public AuditEntry(EntityEntry entry)
+        private readonly Guid correlationId;
+
+        public AuditEntry(EntityEntry entry, Guid correlationIds)
         {
             Entry = entry;
+            this.correlationId = correlationIds;
         }
 
         public EntityEntry Entry { get; }
@@ -30,6 +33,8 @@ namespace CovidDB.ModelsSqlServer
             audit.KeyValues = JsonConvert.SerializeObject(KeyValues);
             audit.OldValues = OldValues.Count == 0 ? null : JsonConvert.SerializeObject(OldValues);
             audit.NewValues = NewValues.Count == 0 ? null : JsonConvert.SerializeObject(NewValues);
+            audit.DateTimeModified = DateTime.UtcNow;
+            audit.CorrelationId = correlationId;
             return audit;
         }
     }

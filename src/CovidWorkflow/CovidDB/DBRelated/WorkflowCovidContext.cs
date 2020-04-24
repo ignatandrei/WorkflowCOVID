@@ -58,7 +58,7 @@ namespace CovidDB.ModelsSqlServer
         private List<AuditEntry> OnBeforeSaveChanges()
         {
             var dateTimeModified = DateTime.UtcNow;
-            var g = Guid.NewGuid();
+            var corelation = Guid.NewGuid();
             ChangeTracker.DetectChanges();
             var auditEntries = new List<AuditEntry>();
             foreach (var entry in ChangeTracker.Entries())
@@ -66,7 +66,7 @@ namespace CovidDB.ModelsSqlServer
                 if (entry.Entity is Audit || entry.State == EntityState.Detached || entry.State == EntityState.Unchanged)
                     continue;
                 
-                var auditEntry = new AuditEntry(entry);
+                var auditEntry = new AuditEntry(entry, corelation);
                 auditEntry.TableName = entry.Metadata.GetTableName();
                 auditEntries.Add(auditEntry);
 
@@ -111,8 +111,6 @@ namespace CovidDB.ModelsSqlServer
             foreach (var auditEntry in auditEntries.Where(_ => !_.HasTemporaryProperties))
             {
                 var entry = auditEntry.ToAudit();
-                entry.DateTimeModified = dateTimeModified;
-                entry.CorrelationId = g;
 
                 Audit.Add(entry);
             }

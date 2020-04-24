@@ -230,15 +230,11 @@ namespace CovidDB.ModelsSqlServer
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.Comments).HasMaxLength(50);
-
+               
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(500);
 
-                entity.Property(e => e.Phone)
-                    .IsRequired()
-                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<PatientMedicalTest>(entity =>

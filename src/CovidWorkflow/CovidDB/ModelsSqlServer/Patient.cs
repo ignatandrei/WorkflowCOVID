@@ -17,9 +17,7 @@ namespace CovidDB.ModelsSqlServer
 
         public long Id { get; set; }
         public string Name { get; set; }
-        public string Phone { get; set; }
-        public string Comments { get; set; }
-
+       
         public virtual ICollection<AnamnesisPatient> AnamnesisPatient { get; set; }
         public virtual ICollection<BedPatient> BedPatient { get; set; }
         public virtual ICollection<DetailsPatient> DetailsPatient { get; set; }
