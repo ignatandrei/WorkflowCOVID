@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NetCore2Blockly;
 
 namespace CovidWorkflow
 {
@@ -44,6 +45,7 @@ namespace CovidWorkflow
                                  builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                              });
             });
+            services.AddBlockly();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,7 +56,7 @@ namespace CovidWorkflow
                 app.UseDeveloperExceptionPage();
                 app.UseCors("ALL");
             }
-            
+            app.UseBlockly();
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
@@ -75,6 +77,7 @@ namespace CovidWorkflow
             
             using var db= scope.ServiceProvider.GetService<WorkflowCovidContext>();
             db.CreateDB();
+            
         }
     }
 }
