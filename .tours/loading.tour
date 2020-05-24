@@ -1,0 +1,31 @@
+{
+  "title": "Loading",
+  "steps": [
+    {
+      "file": "src\\CovidAng\\src\\app\\covid-navig\\covid-navig.component.html",
+      "line": 35,
+      "description": "Show the spinner where is something loaded "
+    },
+    {
+      "file": "src\\CovidAng\\src\\app\\covid-navig\\covid-navig.component.ts",
+      "line": 33,
+      "description": "This is called when looding something from Ajax"
+    },
+    {
+      "file": "src\\CovidAng\\src\\app\\general\\loader.service.ts",
+      "line": 7,
+      "description": "singleton class to have events of loading / unloading"
+    },
+    {
+      "file": "src\\CovidAng\\src\\app\\general\\LoaderInterceptor.ts",
+      "line": 13,
+      "description": "interceptor class to http calls"
+    },
+    {
+      "file": "src\\CovidAng\\src\\app\\app.module.ts",
+      "line": 107,
+      "description": "interceptors defined"
+    }
+  ],
+  "ref": "master"
+}
